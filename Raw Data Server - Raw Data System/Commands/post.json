@@ -1,0 +1,277 @@
+{
+  "name": "post",
+  "permissions": "NONE",
+  "restriction": "1",
+  "_id": "umiDj",
+  "actions": [
+    {
+      "source": "NxLYE",
+      "type": "true",
+      "name": "Call Command/Event"
+    },
+    {
+      "server": "0",
+      "varName": "",
+      "info": "1",
+      "storage": "1",
+      "varName2": "server-id",
+      "name": "Store Server Info"
+    },
+    {
+      "condition": "0",
+      "comparison": "2",
+      "value": "5",
+      "iftrue": "3",
+      "iftrueVal": "2",
+      "iffalse": "0",
+      "iffalseVal": "",
+      "name": "Check Parameters"
+    },
+    {
+      "channel": "0",
+      "varName": "",
+      "message": "Sorry, that's not long enough. You need at least 5 words.\n`!post <category> <your description>`",
+      "storage": "0",
+      "varName2": "",
+      "name": "Send Message"
+    },
+    {
+      "name": "End Action Sequence"
+    },
+    {
+      "info": "0",
+      "infoIndex": "1",
+      "storage": "1",
+      "varName": "category",
+      "name": "Store Command Params"
+    },
+    {
+      "info": "1",
+      "infoIndex": "2",
+      "storage": "1",
+      "varName": "raw-post",
+      "name": "Store Command Params"
+    },
+    {
+      "behavior": "0",
+      "interpretation": "0",
+      "code": "var raw = tempVars(\"raw-post\").toString();\n\nvar raww = raw.length;\n\nthis.storeValue(raww, 1, \"raw\", cache);",
+      "storage": "0",
+      "varName": "",
+      "name": "Run Script"
+    },
+    {
+      "storage": "1",
+      "varName": "raw",
+      "comparison": "4",
+      "value": "1024",
+      "iftrue": "0",
+      "iftrueVal": "",
+      "iffalse": "3",
+      "iffalseVal": "2",
+      "name": "Check Variable"
+    },
+    {
+      "channel": "0",
+      "varName": "",
+      "message": ":thinking: Wow! Sorry. That description is too long. Please ask a moderator to post it manually or short your description (Max. 1024 characters!).",
+      "storage": "0",
+      "varName2": "",
+      "name": "Send Message"
+    },
+    {
+      "name": "End Action Sequence"
+    },
+    {
+      "storage": "1",
+      "varName": "category",
+      "comparison": "6",
+      "value": "(useful|api-use|moderating|music|minigames|troll|run-scripts|testing-the-approval-system)",
+      "iftrue": "3",
+      "iftrueVal": "2",
+      "iffalse": "0",
+      "iffalseVal": "",
+      "name": "Check Variable"
+    },
+    {
+      "channel": "0",
+      "varName": "",
+      "message": ":zzz: That is not a valid category! You may use one of the following:\n`useful`, `api-use`, `moderating`, `music`, `minigames`, `troll`, `run-scripts`",
+      "storage": "0",
+      "varName2": "",
+      "name": "Send Message"
+    },
+    {
+      "name": "End Action Sequence"
+    },
+    {
+      "storage": "1",
+      "varName": "rand-num",
+      "min": "0",
+      "max": "10000",
+      "name": "Generate Random Number"
+    },
+    {
+      "member": "1",
+      "varName": "",
+      "info": "1",
+      "storage": "1",
+      "varName2": "author-id",
+      "name": "Store Member Info"
+    },
+    {
+      "member": "1",
+      "varName": "",
+      "info": "3",
+      "storage": "1",
+      "varName2": "author-display",
+      "name": "Store Member Info"
+    },
+    {
+      "member": "1",
+      "varName": "",
+      "info": "16",
+      "storage": "1",
+      "varName2": "author-avatar",
+      "name": "Store Member Info"
+    },
+    {
+      "info": "1",
+      "find": "${tempVars(\"category\")}",
+      "storage": "1",
+      "varName": "channel",
+      "name": "Find Channel"
+    },
+    {
+      "title": " ",
+      "author": "${tempVars(\"author-display\")}",
+      "color": "#ffa500",
+      "timestamp": "true",
+      "url": "",
+      "authorIcon": "${tempVars(\"author-avatar\")}",
+      "imageUrl": "",
+      "thumbUrl": "",
+      "storage": "1",
+      "varName": "embed",
+      "name": "Create Embed Message"
+    },
+    {
+      "storage": "1",
+      "varName": "embed",
+      "fieldName": "Author",
+      "message": "${member}",
+      "inline": "0",
+      "name": "Add Embed Field"
+    },
+    {
+      "storage": "1",
+      "varName": "embed",
+      "fieldName": "Category",
+      "message": "${tempVars(\"channel\")}",
+      "inline": "0",
+      "name": "Add Embed Field"
+    },
+    {
+      "storage": "1",
+      "varName": "embed",
+      "fieldName": "Raw Data Post",
+      "message": "${tempVars(\"raw-post\")}",
+      "inline": "1",
+      "name": "Add Embed Field"
+    },
+    {
+      "storage": "1",
+      "varName": "embed",
+      "message": "#${tempVars(\"rand-num\")}",
+      "footerIcon": "",
+      "name": "Set Embed Footer"
+    },
+    {
+      "info": "1",
+      "find": "rd-approval",
+      "storage": "1",
+      "varName": "approval-channel",
+      "name": "Find Channel"
+    },
+    {
+      "channel": "3",
+      "varName": "approval-channel",
+      "info": "1",
+      "storage": "1",
+      "varName2": "approval-channel-id",
+      "name": "Store Channel Info"
+    },
+    {
+      "storage": "1",
+      "varName": "embed",
+      "channel": "5",
+      "varName2": "approval-channel",
+      "storage3": "1",
+      "varName3": "embed_object",
+      "name": "Send Embed Message"
+    },
+    {
+      "message": "1",
+      "varName": "embed_object",
+      "info": "1",
+      "storage": "1",
+      "varName2": "embed-id",
+      "name": "Store Message Info"
+    },
+    {
+      "channel": "0",
+      "varName": "",
+      "message": ":white_check_mark: Thank you! You successfully submitted your raw data with the ID **#${tempVars(\"rand-num\")}**!\nSomeone will check if it is correct.",
+      "storage": "0",
+      "varName2": "",
+      "name": "Send Message"
+    },
+    {
+      "behavior": "0",
+      "interpretation": "0",
+      "code": "var post = tempVars(\"raw-post\").toString();\n\nend = post.replace(/'/g, \"''\");\n\nthis.storeValue(end, 1, \"raw-post\", cache);",
+      "storage": "0",
+      "varName": "",
+      "name": "Run Script"
+    },
+    {
+      "storage": "0",
+      "stringifyOutput": "0",
+      "varName": "",
+      "hostname": "",
+      "port": "",
+      "username": "",
+      "password": "",
+      "database": "",
+      "query": "INSERT INTO `raw_data_posts` (`post_id`, `post_author_id`, `post_author_name`, `post_author_img`, `post_body`, `post_category`, `active_post`, `approve_count`, `deny_count`, `deny_reasons`, `users_voted`, `post_msg_id`, `live_msg_id`) VALUES ('${tempVars(\"rand-num\")}', '${tempVars(\"author-id\")}', '${tempVars(\"author-display\")}', '${tempVars(\"author-avatar\")}', '${tempVars(\"raw-post\")}', '${tempVars(\"category\")}', '1', '0', '0', '', '', '${tempVars(\"embed-id\")}', '');",
+      "path": "",
+      "otype": "0",
+      "source_conn_storage": "3",
+      "source_conn_varName": "rd-database-connection",
+      "store_source_conn_storage": "0",
+      "store_source_conn_varName": "",
+      "debugMode": "0",
+      "name": "Run SQL Query"
+    },
+    {
+      "storage": "0",
+      "varName": "",
+      "name": "Delete Message"
+    },
+    {
+      "storage": "1",
+      "varName": "embed_object",
+      "name": "Pin Message"
+    },
+    {
+      "behavior": "0",
+      "interpretation": "0",
+      "code": "var appid = tempVars(\"approval-channel-id\");\n\nclient.channels.get(appid).fetchMessages().then(messages => { if(messages.first().system == true){\nmessages.first().delete()\n}})",
+      "storage": "0",
+      "varName": "",
+      "name": "Run Script"
+    }
+  ],
+  "_timeRestriction": 5,
+  "comType": "0"
+}

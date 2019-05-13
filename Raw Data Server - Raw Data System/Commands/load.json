@@ -1,0 +1,70 @@
+{
+  "name": "load",
+  "permissions": "NONE",
+  "restriction": "1",
+  "_id": "MnoAE",
+  "actions": [
+    {
+      "source": "NxLYE",
+      "type": "true",
+      "name": "Call Command/Event"
+    },
+    {
+      "info": "0",
+      "infoIndex": "1",
+      "storage": "1",
+      "varName": "postidtofind",
+      "name": "Store Command Params"
+    },
+    {
+      "storage": "1",
+      "stringifyOutput": "0",
+      "varName": "results",
+      "hostname": "",
+      "port": "",
+      "username": "",
+      "password": "",
+      "database": "",
+      "query": "SELECT * FROM `raw_data_posts` \n    WHERE `post_id` = ${tempVars(\"postidtofind\")};",
+      "path": "",
+      "otype": "0",
+      "source_conn_storage": "3",
+      "source_conn_varName": "rd-database-connection",
+      "store_source_conn_storage": "0",
+      "store_source_conn_varName": "",
+      "debugMode": "0",
+      "name": "Run SQL Query"
+    },
+    {
+      "behavior": "0",
+      "interpretation": "0",
+      "code": "var postid = tempVars(\"results\")[0].post_id;\nvar postauthorid = tempVars(\"results\")[0].post_author_id;\nvar postauthor = tempVars(\"results\")[0].post_author_name;\nvar postauthorimg = tempVars(\"results\")[0].post_author_img;\nvar postbody = tempVars(\"results\")[0].post_body;\nvar postcategory = tempVars(\"results\")[0].post_category;\nvar postactive = tempVars(\"results\")[0].active_post;\nvar postapprovalcount = tempVars(\"results\")[0].approve_count;\nvar postdenialcount = tempVars(\"results\")[0].deny_count;\nvar postdenialreasons = tempVars(\"results\")[0].deny_reasons;\n\nconsole.log(postid);\nconsole.log(postauthorid);\nconsole.log(postauthor);\nconsole.log(postauthorimg);\nconsole.log(postbody);\nconsole.log(postcategory);\nconsole.log(postactive);\nconsole.log(postapprovalcount);\nconsole.log(postdenialcount);\nconsole.log(postdenialreasons);\n\nthis.storeValue(postid, 1, \"postid\", cache);\nthis.storeValue(postauthorid, 1, \"postauthorid\", cache);\nthis.storeValue(postauthor, 1, \"postauthor\", cache);\nthis.storeValue(postauthorimg, 1, \"postauthorimg\", cache);\nthis.storeValue(postbody, 1, \"postbody\", cache);\nthis.storeValue(postcategory, 1, \"postcategory\", cache);\nthis.storeValue(postactive, 1, \"postactive\", cache);\nthis.storeValue(postapprovalcount, 1, \"postapprovalcount\", cache);\nthis.storeValue(postdenialcount, 1, \"postdenialcount\", cache);\nthis.storeValue(postdenialreasons, 1, \"postdenialreasons\", cache);",
+      "storage": "0",
+      "varName": "",
+      "name": "Run Script"
+    },
+    {
+      "info": "1",
+      "find": "${tempVars(\"postcategory\")}",
+      "storage": "1",
+      "varName": "channel",
+      "name": "Find Channel"
+    },
+    {
+      "info": "0",
+      "find": "${tempVars(\"postauthorid\")}",
+      "storage": "1",
+      "varName": "author",
+      "name": "Find Member"
+    },
+    {
+      "behavior": "0",
+      "interpretation": "0",
+      "code": "var Discord = require('discord.js');\nvar active = tempVars(\"postactive\");\nvar approvecount = tempVars(\"postapprovalcount\");\nvar denycount = tempVars(\"postdenialcount\");\nvar denyreasons = tempVars(\"postdenialreasons\");\nvar postauthor = tempVars(\"postauthor\");\nvar authorimg = tempVars(\"postauthorimg\");\nvar channel = tempVars(\"channel\");\nvar author = tempVars(\"author\");\nvar postbody = tempVars(\"postbody\");\nvar postid = tempVars(\"postid\");\n\n\nif (active == 1) {\n  const embed = new Discord.RichEmbed()\n  .setAuthor(postauthor, authorimg)\n  .setColor(\"#ffa500\")\n  .setTimestamp()\n  .addField(\"Category\", channel, true)\n  .addField(\"Author\", author, true)\n  .addField(\"Raw Data Post\", postbody, false)\n  .setFooter(\"Pending #\" + postid);\n  msg.channel.send({embed});\n\n} else if (active == 0 && approvecount == 5) {\n  const embed = new Discord.RichEmbed()\n  .setAuthor(postauthor, authorimg)\n  .setColor(\"#50C878\")\n  .setTimestamp()\n  .addField(\"Category\", channel, true)\n  .addField(\"Author\", author, true)\n  .addField(\"Raw Data Post\", postbody, false)\n  .setFooter(\"Approved #\" + postid);\n  msg.channel.send({embed});\n\n} else if (active == 0 && denycount == 5) {\n  const embed = new Discord.RichEmbed()\n  .setAuthor(postauthor, authorimg)\n  .setColor(\"#E74C3C\")\n  .setTimestamp()\n  .addField(\"Category\", channel, true)\n  .addField(\"Author\", author, true)\n  .addField(\"Raw Data Post\", postbody, false)\n  .addField(\"Denial Reasons\", denyreasons)\n  .setFooter(\"Denied #\" + postid);\n  msg.channel.send({embed});\n\n} else {\n  msg.channel.send(\"Are you sure that's a valid post?\");\n};\n\n",
+      "storage": "0",
+      "varName": "",
+      "name": "Run Script"
+    }
+  ],
+  "_aliases": []
+}

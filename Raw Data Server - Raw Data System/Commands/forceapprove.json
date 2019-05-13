@@ -1,0 +1,486 @@
+{
+  "name": "forceapprove",
+  "permissions": "NONE",
+  "restriction": "1",
+  "_id": "HxJow",
+  "actions": [
+    {
+      "source": "NxLYE",
+      "type": "true",
+      "name": "Call Command/Event"
+    },
+    {
+      "source": "BTvDQ",
+      "type": "true",
+      "name": "Call Command/Event"
+    },
+    {
+      "member": "1",
+      "varName": "",
+      "info": "1",
+      "storage": "1",
+      "varName2": "cmd-author-id",
+      "name": "Store Member Info"
+    },
+    {
+      "info": "1",
+      "find": "Dev Testers",
+      "storage": "1",
+      "varName": "role",
+      "name": "Find Role"
+    },
+    {
+      "info": "1",
+      "find": "rd-approval",
+      "storage": "1",
+      "varName": "approval-channel",
+      "name": "Find Channel"
+    },
+    {
+      "storage": "0",
+      "varName": "",
+      "name": "Delete Message"
+    },
+    {
+      "info": "0",
+      "infoIndex": "1",
+      "storage": "1",
+      "varName": "postidtofind",
+      "name": "Store Command Params"
+    },
+    {
+      "behavior": "1",
+      "interpretation": "0",
+      "code": "var param = tempVars(\"postidtofind\");\nvar patt = /[0-9]/g;\nif(param.match(patt)){\nthis.callNextAction(cache)\n} else{\nmsg.channel.send(\":x: Invalid post.\")\n}",
+      "storage": "0",
+      "varName": "",
+      "name": "Run Script"
+    },
+    {
+      "channel": "0",
+      "varName": "",
+      "info": "2",
+      "storage": "1",
+      "varName2": "curchannel",
+      "name": "Store Channel Info"
+    },
+    {
+      "storage": "1",
+      "varName": "curchannel",
+      "comparison": "5",
+      "value": "\"rd-contributor-chat\"",
+      "iftrue": "3",
+      "iftrueVal": "2",
+      "iffalse": "0",
+      "iffalseVal": "",
+      "name": "Check Variable"
+    },
+    {
+      "channel": "0",
+      "varName": "",
+      "message": ":thinking: no u. go to a gud channel.",
+      "storage": "0",
+      "varName2": "",
+      "name": "Send Message"
+    },
+    {
+      "name": "End Action Sequence"
+    },
+    {
+      "condition": "0",
+      "comparison": "0",
+      "value": "1",
+      "iftrue": "3",
+      "iftrueVal": "2",
+      "iffalse": "0",
+      "iffalseVal": "3",
+      "name": "Check Parameters"
+    },
+    {
+      "channel": "0",
+      "varName": "",
+      "message": ":thinking: Use the format!\n`!approve [ID]`",
+      "storage": "0",
+      "varName2": "",
+      "name": "Send Message"
+    },
+    {
+      "name": "End Action Sequence"
+    },
+    {
+      "storage": "1",
+      "stringifyOutput": "0",
+      "varName": "results",
+      "hostname": "",
+      "port": "",
+      "username": "",
+      "password": "",
+      "database": "",
+      "query": "SELECT * FROM `raw_data_posts` \n    WHERE `post_id` = ${tempVars(\"postidtofind\")};",
+      "path": "",
+      "otype": "0",
+      "source_conn_storage": "3",
+      "source_conn_varName": "rd-database-connection",
+      "store_source_conn_storage": "0",
+      "store_source_conn_varName": "",
+      "debugMode": "0",
+      "name": "Run SQL Query"
+    },
+    {
+      "behavior": "0",
+      "interpretation": "0",
+      "code": "var postid = tempVars(\"results\")[0].post_id;\nvar postauthorid = tempVars(\"results\")[0].post_author_id;\nvar postauthor = tempVars(\"results\")[0].post_author_name;\nvar postauthorimg = tempVars(\"results\")[0].post_author_img;\nvar postbody = tempVars(\"results\")[0].post_body;\nvar postcategory = tempVars(\"results\")[0].post_category;\nvar postactive = tempVars(\"results\")[0].active_post;\nvar postapprovalcount = tempVars(\"results\")[0].approve_count;\nvar postdenialcount = tempVars(\"results\")[0].deny_count;\nvar postdenialreasons = tempVars(\"results\")[0].deny_reasons;\nvar voters = tempVars(\"results\")[0].users_voted;\nvar active = postactive;\nvar msgid = tempVars(\"results\")[0].post_msg_id;\n\nif (postactive == 1) {\n  var status = \"1\";\n  var postapprovalcount = parseInt(postapprovalcount) + 1;\n} else if (postactive == 0) {\n  var status = \"0\";\n} else {\n  var status = \"-1\";\n};\n\nvar id = postid\nJSON.stringify(id)\nid = parseInt(id)\nif(!id){\n  console.log(\"Does Not Exist.\");\n  id = \"undefined\";\n  this.storeValue(id, 1, \"post-id\", cache)\n};\n\nthis.storeValue(postid, 1, \"postid\", cache);\nthis.storeValue(postauthorid, 1, \"postauthorid\", cache);\nthis.storeValue(postauthor, 1, \"postauthor\", cache);\nthis.storeValue(postauthorimg, 1, \"postauthorimg\", cache);\nthis.storeValue(postbody, 1, \"postbody\", cache);\nthis.storeValue(postcategory, 1, \"postcategory\", cache);\nthis.storeValue(postactive, 1, \"postactive\", cache);\nthis.storeValue(postapprovalcount, 1, \"postapprovalcount\", cache);\nthis.storeValue(postdenialcount, 1, \"postdenialcount\", cache);\nthis.storeValue(postdenialreasons, 1, \"postdenialreasons\", cache);\nthis.storeValue(status, 1, \"status\", cache);\nthis.storeValue(voters, 1, \"usersvoted\", cache);\nthis.storeValue(msgid, 1, \"originalmsgid\", cache);",
+      "storage": "0",
+      "varName": "",
+      "name": "Run Script"
+    },
+    {
+      "storage": "1",
+      "varName": "results",
+      "comparison": "1",
+      "value": "('[]'|undefined|NaN)",
+      "iftrue": "3",
+      "iftrueVal": "2",
+      "iffalse": "0",
+      "iffalseVal": "2",
+      "name": "Check Variable"
+    },
+    {
+      "storage": "1",
+      "varName": "post-id",
+      "comparison": "1",
+      "value": "\"undefined\"",
+      "iftrue": "3",
+      "iftrueVal": "1",
+      "iffalse": "0",
+      "iffalseVal": "3",
+      "name": "Check Variable"
+    },
+    {
+      "storage": "1",
+      "varName": "post-id",
+      "comparison": "1",
+      "value": "[]",
+      "iftrue": "0",
+      "iftrueVal": "3",
+      "iffalse": "3",
+      "iffalseVal": "2",
+      "name": "Check Variable"
+    },
+    {
+      "channel": "0",
+      "varName": "",
+      "message": ":x: Invalid post.",
+      "storage": "0",
+      "varName2": "",
+      "name": "Send Message"
+    },
+    {
+      "name": "End Action Sequence"
+    },
+    {
+      "storage": "1",
+      "varName": "status",
+      "comparison": "1",
+      "value": "'0'",
+      "iftrue": "0",
+      "iftrueVal": "3",
+      "iffalse": "3",
+      "iffalseVal": "2",
+      "name": "Check Variable"
+    },
+    {
+      "channel": "0",
+      "varName": "",
+      "message": ":x: This post is no longer active.",
+      "storage": "0",
+      "varName2": "",
+      "name": "Send Message"
+    },
+    {
+      "name": "End Action Sequence"
+    },
+    {
+      "behavior": "0",
+      "interpretation": "0",
+      "code": "var postactive = tempVars(\"status\");\nvar voters = tempVars(\"usersvoted\");\nvar postapprovalcount = tempVars(\"postapprovalcount\");\nvar cmdauth = tempVars(\"cmd-author-id\");\n\nif (postapprovalcount == 5) {\n  var status = \"0\";\n};\n\nthis.storeValue(status, 1, \"postactive\");\nthis.storeValue(postapprovalcount, 1, \"postapprovalcount\", cache);\nthis.storeValue(usersvoted, 1, \"usersvoted\", cache);",
+      "storage": "0",
+      "varName": "",
+      "name": "Run Script"
+    },
+    {
+      "storage": "0",
+      "stringifyOutput": "0",
+      "varName": "",
+      "hostname": "",
+      "port": "",
+      "username": "",
+      "password": "",
+      "database": "",
+      "query": "UPDATE `raw_data_posts` \nSET `active_post` = '0', `approve_count` = '5', `users_voted` = '${tempVars(\"usersvoted\")}\\n${tempVars(\"cmd-author-id\")}'\n    WHERE `post_id` = ${tempVars(\"postidtofind\")};",
+      "path": "",
+      "otype": "0",
+      "source_conn_storage": "3",
+      "source_conn_varName": "rd-database-connection",
+      "store_source_conn_storage": "0",
+      "store_source_conn_varName": "results",
+      "debugMode": "0",
+      "name": "Run SQL Query"
+    },
+    {
+      "channel": "5",
+      "varName": "approval-channel",
+      "message": "${member} forcefully accepted **#${tempVars(\"postidtofind\")}**",
+      "storage": "0",
+      "varName2": "",
+      "name": "Send Message"
+    },
+    {
+      "storage": "0",
+      "stringifyOutput": "0",
+      "varName": "",
+      "hostname": "",
+      "port": "",
+      "username": "",
+      "password": "",
+      "database": "",
+      "query": "UPDATE `raw_data_posts` \nSET `active_post` = '0'\n    WHERE `post_id` = ${tempVars(\"postidtofind\")};",
+      "path": "",
+      "otype": "0",
+      "source_conn_storage": "3",
+      "source_conn_varName": "rd-database-connection",
+      "store_source_conn_storage": "0",
+      "store_source_conn_varName": "results",
+      "debugMode": "0",
+      "name": "Run SQL Query"
+    },
+    {
+      "info": "0",
+      "find": "${tempVars(\"postauthorid\")}",
+      "storage": "1",
+      "varName": "author",
+      "name": "Find Member"
+    },
+    {
+      "info": "1",
+      "find": "${tempVars(\"postcategory\")}",
+      "storage": "1",
+      "varName": "channel",
+      "name": "Find Channel"
+    },
+    {
+      "channel": "3",
+      "varName": "approval-channel",
+      "info": "1",
+      "storage": "1",
+      "varName2": "approval-channel-id",
+      "name": "Store Channel Info"
+    },
+    {
+      "title": " ",
+      "author": "${tempVars(\"postauthor\")}",
+      "color": "#50C878",
+      "timestamp": "true",
+      "url": "",
+      "authorIcon": "${tempVars(\"postauthorimg\")}",
+      "imageUrl": "",
+      "thumbUrl": "",
+      "storage": "1",
+      "varName": "embed",
+      "name": "Create Embed Message"
+    },
+    {
+      "storage": "1",
+      "varName": "embed",
+      "fieldName": "Category",
+      "message": "${tempVars(\"channel\")}",
+      "inline": "0",
+      "name": "Add Embed Field"
+    },
+    {
+      "storage": "1",
+      "varName": "embed",
+      "fieldName": "Author",
+      "message": "${tempVars(\"author\")}",
+      "inline": "0",
+      "name": "Add Embed Field"
+    },
+    {
+      "storage": "1",
+      "varName": "embed",
+      "fieldName": "Post Body",
+      "message": "${tempVars(\"postbody\")}",
+      "inline": "1",
+      "name": "Add Embed Field"
+    },
+    {
+      "storage": "1",
+      "varName": "embed",
+      "message": "Approved #${tempVars(\"postidtofind\")}",
+      "footerIcon": "",
+      "name": "Set Embed Footer"
+    },
+    {
+      "storage": "1",
+      "varName": "embed",
+      "channel": "5",
+      "varName2": "approval-channel",
+      "storage3": "0",
+      "varName3": "embed-sent-message",
+      "name": "Send Embed Message"
+    },
+    {
+      "behavior": "0",
+      "interpretation": "0",
+      "code": "var origin = tempVars(\"originalmsgid\");\n\nfunction logMapElements(value, key, map) {\nif(value.pinned == true && value.id == origin){\n  value.unpin();\n  value.delete();\n}\n}\nclient.channels.get(tempVars(\"approval-channel-id\")).fetchPinnedMessages().then(messages => messages.forEach(logMapElements)) ",
+      "storage": "0",
+      "varName": "",
+      "name": "Run Script"
+    },
+    {
+      "time": "4",
+      "measurement": "1",
+      "name": "Wait"
+    },
+    {
+      "title": " ",
+      "author": "${tempVars(\"postauthor\")}",
+      "color": "RANDOM",
+      "timestamp": "true",
+      "url": "",
+      "authorIcon": "${tempVars(\"postauthorimg\")}",
+      "imageUrl": "",
+      "thumbUrl": "",
+      "storage": "1",
+      "varName": "final-embed",
+      "name": "Create Embed Message"
+    },
+    {
+      "storage": "1",
+      "varName": "final-embed",
+      "message": "${tempVars(\"postbody\")}",
+      "name": "Set Embed Description"
+    },
+    {
+      "storage": "1",
+      "varName": "final-embed",
+      "message": "#${tempVars(\"postidtofind\")} | 👍 Upvote | 👎 Downvote | ❗ Does not function",
+      "footerIcon": "",
+      "name": "Set Embed Footer"
+    },
+    {
+      "storage": "1",
+      "varName": "final-embed",
+      "channel": "5",
+      "varName2": "channel",
+      "storage3": "1",
+      "varName3": "embed-sent-message",
+      "name": "Send Embed Message"
+    },
+    {
+      "storage": "1",
+      "varName": "embed-sent-message",
+      "emoji": "4",
+      "varName2": "👍",
+      "varName3": "",
+      "name": "Add Reaction"
+    },
+    {
+      "storage": "1",
+      "varName": "embed-sent-message",
+      "emoji": "4",
+      "varName2": "👎",
+      "varName3": "",
+      "name": "Add Reaction"
+    },
+    {
+      "storage": "1",
+      "varName": "embed-sent-message",
+      "emoji": "4",
+      "varName2": "❗",
+      "varName3": "",
+      "name": "Add Reaction"
+    },
+    {
+      "message": "1",
+      "varName": "embed-sent-message",
+      "info": "1",
+      "storage": "1",
+      "varName2": "live-msg-id",
+      "name": "Store Message Info"
+    },
+    {
+      "storage": "0",
+      "stringifyOutput": "0",
+      "varName": "",
+      "hostname": "",
+      "port": "",
+      "username": "",
+      "password": "",
+      "database": "",
+      "query": "UPDATE `raw_data_posts` \nSET `live_msg_id` = '${tempVars(\"live-msg-id\")}'\n    WHERE `post_id` = ${tempVars(\"postidtofind\")};",
+      "path": "",
+      "otype": "0",
+      "source_conn_storage": "3",
+      "source_conn_varName": "rd-database-connection",
+      "store_source_conn_storage": "0",
+      "store_source_conn_varName": "results",
+      "debugMode": "0",
+      "name": "Run SQL Query"
+    },
+    {
+      "info": "1",
+      "find": "rd-contributor-chat",
+      "storage": "1",
+      "varName": "rd-contributor-chat",
+      "name": "Find Channel"
+    },
+    {
+      "channel": "3",
+      "varName": "rd-contributor-chat",
+      "info": "1",
+      "storage": "1",
+      "varName2": "rd-contributor-chat-id",
+      "name": "Store Channel Info"
+    },
+    {
+      "behavior": "0",
+      "interpretation": "0",
+      "code": "var auth = tempVars(\"author\");\nvar rdapp = tempVars(\"rd-contributor-chat-id\");\n\nauth.send(\"Hey, we're just letting you know that your Raw Data #**${tempVars(\"postidtofind\")}** has been accepted!\").catch(() => client.channels.get(rdapp).send(auth + \" has their DMs disabled! Someone let them know their Raw Data with the ID of **#${tempVars(\"postidtofind\")}** was accepted!\"))",
+      "storage": "0",
+      "varName": "",
+      "name": "Run Script"
+    },
+    {
+      "member": "2",
+      "varName": "author",
+      "role": "3",
+      "varName2": "role",
+      "iftrue": "1",
+      "iftrueVal": "",
+      "iffalse": "0",
+      "iffalseVal": "",
+      "name": "Check If Member has Role"
+    },
+    {
+      "behavior": "0",
+      "interpretation": "0",
+      "code": "var auth = tempVars(\"author\");\nvar rdapp = tempVars(\"rd-contributor-chat-id\");\n\nauth.send(\"🎉 Looks like this is your first accepted post! Congratulations!\\nWe have a very special surprise for you... Welcome to the team!\").catch(() => client.channels.get(rdapp).send(auth + \" has their DMs disabled! Everyone welcome them to the Raw Data Contributor Team!\"))",
+      "storage": "0",
+      "varName": "",
+      "name": "Run Script"
+    },
+    {
+      "member": "2",
+      "varName2": "author",
+      "role": "3",
+      "varName": "role",
+      "name": "Add Member Role"
+    }
+  ],
+  "_aliases": [
+    "forceaccept",
+    "fapprove",
+    "faccept"
+  ]
+}

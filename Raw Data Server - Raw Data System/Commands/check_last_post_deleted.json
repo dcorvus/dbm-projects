@@ -1,0 +1,73 @@
+{
+  "name": "[Check] Last Post Deleted",
+  "permissions": "NONE",
+  "restriction": "0",
+  "_id": "sbJlC",
+  "actions": [
+    {
+      "info": "1",
+      "find": "Dev Testers",
+      "storage": "1",
+      "varName": "rd-role",
+      "name": "Find Role"
+    },
+    {
+      "info": "1",
+      "find": "rd-contributor-chat",
+      "storage": "1",
+      "varName": "rd-contributor-chat",
+      "name": "Find Channel"
+    },
+    {
+      "channel": "3",
+      "varName": "rd-contributor-chat",
+      "info": "1",
+      "storage": "1",
+      "varName2": "rd-contributor-chat-id",
+      "name": "Store Channel Info"
+    },
+    {
+      "info": "0",
+      "find": "${tempVars(\"postauthorid\")}",
+      "storage": "1",
+      "varName": "author",
+      "name": "Find Member"
+    },
+    {
+      "storage": "1",
+      "stringifyOutput": "0",
+      "varName": "is-last-post",
+      "hostname": "",
+      "port": "",
+      "username": "",
+      "password": "",
+      "database": "",
+      "query": "SELECT `post_id` FROM `raw_data_posts` \n    WHERE `post_author_id` = ${tempVars(\"postauthorid\")};",
+      "path": "",
+      "otype": "0",
+      "source_conn_storage": "3",
+      "source_conn_varName": "rd-database-connection",
+      "store_source_conn_storage": "0",
+      "store_source_conn_varName": "rd-database-connection",
+      "debugMode": "0",
+      "name": "Run SQL Query"
+    },
+    {
+      "behavior": "0",
+      "interpretation": "0",
+      "code": "var a = tempVars(\"is-last-post\");\n\nvar arr = []\nb = JSON.parse(a)\nfor (var i in b) {\narr.push(b[i].post_id)\n};\n\nthis.storeValue(arr, 1, \"is-last-post\", cache);",
+      "storage": "0",
+      "varName": "",
+      "name": "Run Script"
+    },
+    {
+      "behavior": "0",
+      "interpretation": "0",
+      "code": "var Discord = require('discord.js');\nlastposts = tempVars(\"is-last-post\");\nvar auth = tempVars(\"author\");\nvar role = tempVars(\"rd-role\");\nvar rdc = tempVars(\"rd-contributor-chat-id\");\nstatus = lastposts.toString()\n\nif (!status) {\n  auth.removeRole(role);\n  client.channels.get(rdc).send(auth + \" just had their one and only post deleted! Their Contributor Role was removed.\");\n};",
+      "storage": "0",
+      "varName": "",
+      "name": "Run Script"
+    }
+  ],
+  "comType": "0"
+}

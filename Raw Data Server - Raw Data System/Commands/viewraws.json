@@ -1,0 +1,210 @@
+{
+  "name": "viewraws",
+  "permissions": "NONE",
+  "restriction": "1",
+  "_id": "WEHaS",
+  "actions": [
+    {
+      "source": "NxLYE",
+      "type": "true",
+      "name": "Call Command/Event"
+    },
+    {
+      "condition": "0",
+      "comparison": "0",
+      "value": "0",
+      "iftrue": "0",
+      "iftrueVal": "",
+      "iffalse": "3",
+      "iffalseVal": "2",
+      "name": "Check Parameters"
+    },
+    {
+      "channel": "0",
+      "varName": "",
+      "message": "You need to either mention a member or give their user id!",
+      "storage": "0",
+      "varName2": "",
+      "name": "Send Message"
+    },
+    {
+      "name": "End Action Sequence"
+    },
+    {
+      "condition": "1",
+      "comparison": "0",
+      "value": "0",
+      "iftrue": "0",
+      "iftrueVal": "",
+      "iffalse": "3",
+      "iffalseVal": "5",
+      "name": "Check Parameters"
+    },
+    {
+      "info": "0",
+      "infoIndex": "1",
+      "storage": "1",
+      "varName": "userid",
+      "name": "Store Command Params"
+    },
+    {
+      "info": "0",
+      "find": "${tempVars(\"userid\")}",
+      "storage": "1",
+      "varName": "user",
+      "name": "Find Member"
+    },
+    {
+      "storage": "1",
+      "varName": "user",
+      "comparison": "0",
+      "value": "",
+      "iftrue": "3",
+      "iftrueVal": "3",
+      "iffalse": "1",
+      "iffalseVal": "",
+      "name": "Check Variable"
+    },
+    {
+      "channel": "0",
+      "varName": "",
+      "message": "Uh oh. That user doesn't exist here.",
+      "storage": "0",
+      "varName2": "",
+      "name": "Send Message"
+    },
+    {
+      "name": "End Action Sequence"
+    },
+    {
+      "info": "2",
+      "infoIndex": "1",
+      "storage": "1",
+      "varName": "user",
+      "name": "Store Command Params"
+    },
+    {
+      "member": "2",
+      "varName": "user",
+      "info": "1",
+      "storage": "1",
+      "varName2": "userid",
+      "name": "Store Member Info"
+    },
+    {
+      "storage": "1",
+      "stringifyOutput": "1",
+      "varName": "pending-results",
+      "hostname": "",
+      "port": "",
+      "username": "",
+      "password": "",
+      "database": "",
+      "query": "SELECT `post_id` FROM `raw_data_posts` \n    WHERE `post_author_id` = ${tempVars(\"userid\")}\n    AND `active_post` = '1';",
+      "path": "",
+      "otype": "0",
+      "source_conn_storage": "3",
+      "source_conn_varName": "rd-database-connection",
+      "store_source_conn_storage": "0",
+      "store_source_conn_varName": "",
+      "debugMode": "0",
+      "name": "Run SQL Query"
+    },
+    {
+      "storage": "1",
+      "stringifyOutput": "1",
+      "varName": "accepted-results",
+      "hostname": "",
+      "port": "",
+      "username": "",
+      "password": "",
+      "database": "",
+      "query": "SELECT `post_id` FROM `raw_data_posts` \n    WHERE `post_author_id` = ${tempVars(\"userid\")}\n    AND `approve_count` = '5';",
+      "path": "",
+      "otype": "0",
+      "source_conn_storage": "3",
+      "source_conn_varName": "rd-database-connection",
+      "store_source_conn_storage": "0",
+      "store_source_conn_varName": "",
+      "debugMode": "0",
+      "name": "Run SQL Query"
+    },
+    {
+      "behavior": "0",
+      "interpretation": "0",
+      "code": "var a = tempVars(\"pending-results\");\n\nvar arr = []\nb = JSON.parse(a)\nfor (var i in b) {\narr.push(b[i].post_id)\n};\n\nthis.storeValue(arr, 1, \"pending-results\", cache);",
+      "storage": "0",
+      "varName": "",
+      "name": "Run Script"
+    },
+    {
+      "behavior": "0",
+      "interpretation": "0",
+      "code": "var a = tempVars(\"accepted-results\");\n\nvar arr = []\nb = JSON.parse(a)\nfor (var i in b) {\narr.push(b[i].post_id)\n};\n\nthis.storeValue(arr, 1, \"accepted-results\", cache);",
+      "storage": "0",
+      "varName": "",
+      "name": "Run Script"
+    },
+    {
+      "storage": "1",
+      "varName": "pending-results",
+      "comparison": "0",
+      "value": "",
+      "iftrue": "0",
+      "iftrueVal": "",
+      "iffalse": "3",
+      "iffalseVal": "1",
+      "name": "Check Variable"
+    },
+    {
+      "list": "7",
+      "varName": "pending-results",
+      "start": "#",
+      "middle": "",
+      "end": "\\n",
+      "storage": "1",
+      "varName2": "pending-results",
+      "sort": "1",
+      "name": "Convert List to Text"
+    },
+    {
+      "storage": "1",
+      "varName": "accepted-results",
+      "comparison": "0",
+      "value": "",
+      "iftrue": "0",
+      "iftrueVal": "",
+      "iffalse": "3",
+      "iffalseVal": "1",
+      "name": "Check Variable"
+    },
+    {
+      "list": "7",
+      "varName": "accepted-results",
+      "start": "#",
+      "middle": "",
+      "end": "\\n",
+      "storage": "1",
+      "varName2": "accepted-results",
+      "sort": "1",
+      "name": "Convert List to Text"
+    },
+    {
+      "behavior": "0",
+      "interpretation": "0",
+      "code": "var accepted = tempVars(\"accepted-results\");\nvar pending = tempVars(\"pending-results\");\n\nconsole.log(pending);\nconsole.log(accepted);",
+      "storage": "0",
+      "varName": "",
+      "name": "Run Script"
+    },
+    {
+      "behavior": "0",
+      "interpretation": "0",
+      "code": "var Discord = require('discord.js');\nvar accepted = tempVars(\"accepted-results\");\nvar pending = tempVars(\"pending-results\");\nvar mem = tempVars(\"user\");\naccepted = accepted.toString()\npending = pending.toString()\nif (!accepted && !pending) {\n\naccepted = \"None!\"\n\npending = \"None!\"\n\n  const embed = new Discord.RichEmbed()\n  .setAuthor(mem.displayName, mem.user.displayAvatarURL)\n  .setColor(\"RED\")\n  .setDescription(\"Looks like this person doesn\\'t have any Raw Datas!\")\n  .setTimestamp();\n  msg.channel.send({embed});\n} else {\nif(!accepted){\naccepted = \"None!\"\n} else{\npending = \"None!\"\n}\n  const embed = new Discord.RichEmbed()\n  .setAuthor(mem.displayName, mem.user.displayAvatarURL)\n  .setColor(\"RANDOM\")\n  .setTimestamp()\n  .addField(\"Pending\", pending, true)\n  .addField(\"Accepted\", accepted, true);\n  msg.channel.send({embed});\n};",
+      "storage": "0",
+      "varName": "",
+      "name": "Run Script"
+    }
+  ],
+  "_aliases": []
+}

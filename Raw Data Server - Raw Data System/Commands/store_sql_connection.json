@@ -1,0 +1,38 @@
+{
+  "name": "[Store] SQL Connection",
+  "permissions": "NONE",
+  "restriction": "0",
+  "_id": "hSDWO",
+  "actions": [
+    {
+      "storage": "1",
+      "stringifyOutput": "0",
+      "varName": "",
+      "hostname": "",
+      "port": "",
+      "username": "",
+      "password": "",
+      "database": "",
+      "query": "CREATE TABLE IF NOT EXISTS `raw_data_posts` (\n  `post_id` varchar(255),\n  `post_author_id` varchar(255),\n  `post_author_name` varchar(3000),\n  `post_author_img` varchar(3000),\n  `post_body` varchar(3000),\n  `post_category` varchar(3000),\n  `active_post` int(50),\n  `approve_count` int(50),\n  `deny_count` int(50),\n  `deny_reasons` varchar(3000),\n  `users_voted` varchar(3000),\n  `post_msg_id` varchar(255),\n  `live_msg_id` varchar(255),\n  PRIMARY KEY (`post_id`,`post_author_id`)\n) DEFAULT CHARSET=utf8;",
+      "path": "",
+      "otype": "0",
+      "source_conn_storage": "0",
+      "source_conn_varName": "",
+      "store_source_conn_storage": "3",
+      "store_source_conn_varName": "rd-database-connection",
+      "debugMode": "0",
+      "name": "Run SQL Query"
+    },
+    {
+      "storage": "3",
+      "varName": "rd-database-connection",
+      "name": "Save Variable"
+    },
+    {
+      "comment": "",
+      "color": "#000000",
+      "name": "Comment"
+    }
+  ],
+  "comType": "0"
+}

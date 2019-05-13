@@ -1,0 +1,31 @@
+## General Information    
+This is the private comission that was issued to me.
+
+## Important Information / Notes    
+
+1. Before attempting to get support, please make sure that you have the following in BOTH your Bot Files as well as your DBM Files.
+    - [x] [Beta Version of Discord Bot Maker](https://dbotmaker.io/forums/threads/how-to-join-the-beta-version-for-newbies-and-more.63/).
+    - [x] [The Latest Beta Mods](https://github.com/Discord-Bot-Maker-Mods/DBM-Mods/tree/beta).
+2. Be sure you are not downloading the files and putting them in the DBM Directory, but instead [Copying the data of each file into a new Command / Event](https://i.imgur.com/gDWVVXl.png).    
+3. The following is everything that you will need to edit.
+    - `[Store] SQL Connection` - Action #1 - Connection Info    
+    - `[Reaction] Send Message` - Action #4 - Emoji ID (Must be a Custom One)    
+    - `[Reaction] Send Message` - Action #14 - Channel Name        
+    - `WTB` - Action #20 - Emoji ID (Must be a Custom One)    
+    - `WTS` - Action #20 - Emoji ID (Must be a Custom One)
+4. The Custom Emoji ID you use MUST be the same for all of the commands.
+
+## Links to the JSON Raw Datas    
+
+- Commands
+    - [`store_sql_connection.json`](https://gist.github.com/dcorvus/1c4f4185de1d1c83b7ccf2b79d5f755d)    
+    - [`wtb.json`](https://gist.github.com/dcorvus/303a77433df7f1230a3b8ea41b0d212c)     
+    - [`wts.json`](https://gist.github.com/dcorvus/3586301991a5c7abcd2c02285c65f876)    
+    - [`sold.json`](https://gist.github.com/dcorvus/b5150c272970379fe520c7bcf582c09b)   
+- Events
+    - [`ActivateCachedOnReaction.json`](https://gist.github.com/dcorvus/7151a464bdbc41fcce2d5634e21d7485)    
+    - [`reaction_send_message.json`](https://gist.github.com/dcorvus/27a0eba3bee60192ccfff612349751d2)    
+    - [`init_init_database.json`](https://gist.github.com/dcorvus/af7a8a9dc1658003d65bb0d18062e020)     
+
+## Credits and Disclaimers   
+All code listed in this repository unless explicitly stated are all created by me, if I use code from another I will credit them appropriately. If you have issues with any of the codes stated, please make sure you have followed everything in the Important Information / Notes section prior to doing anything else. If you still have issues after that, then please, **`do not ping me or DM me`**, but instead ask in the of the [Raw Data Server's Support Channel](https://discord.gg/cW9zmCu) and you will be assisted when someone is able to.

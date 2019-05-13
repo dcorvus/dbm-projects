@@ -1,0 +1,63 @@
+{
+  "name": "[Check] Whitelist or Mod",
+  "permissions": "NONE",
+  "restriction": "0",
+  "_id": "BTvDQ",
+  "actions": [
+    {
+      "member": "1",
+      "varName": "",
+      "info": "1",
+      "storage": "1",
+      "varName2": "cmd-auth-id",
+      "name": "Store Member Info"
+    },
+    {
+      "info": "1",
+      "find": "Mod",
+      "storage": "1",
+      "varName": "mod-role",
+      "name": "Find Role"
+    },
+    {
+      "member": "1",
+      "varName": "",
+      "role": "3",
+      "varName2": "mod-role",
+      "iftrue": "3",
+      "iftrueVal": "3",
+      "iffalse": "0",
+      "iffalseVal": "1",
+      "name": "Check If Member has Role"
+    },
+    {
+      "member": "1",
+      "varName": "",
+      "dataName": "force_whitelist",
+      "comparison": "1",
+      "value": "1",
+      "iftrue": "3",
+      "iftrueVal": "2",
+      "iffalse": "0",
+      "iffalseVal": "",
+      "name": "Check Member Data"
+    },
+    {
+      "channel": "0",
+      "varName": "",
+      "message": "You're not whitelisted to force approve or deny. Nor are you a Moderator! Contact someone with the `MANAGE_GUILD` permission.",
+      "storage": "0",
+      "varName2": "",
+      "name": "Send Message"
+    },
+    {
+      "name": "End Action Sequence"
+    },
+    {
+      "comment": "",
+      "color": "#000000",
+      "name": "Comment"
+    }
+  ],
+  "comType": "0"
+}

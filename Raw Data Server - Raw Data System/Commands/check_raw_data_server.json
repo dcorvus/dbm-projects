@@ -1,0 +1,33 @@
+{
+  "name": "[Check] Raw Data Server",
+  "permissions": "NONE",
+  "restriction": "0",
+  "_id": "NxLYE",
+  "actions": [
+    {
+      "server": "0",
+      "varName": "",
+      "info": "1",
+      "storage": "1",
+      "varName2": "server-id",
+      "name": "Store Server Info"
+    },
+    {
+      "storage": "1",
+      "varName": "server-id",
+      "comparison": "1",
+      "value": "'467499215300591636'",
+      "iftrue": "0",
+      "iftrueVal": "2",
+      "iffalse": "1",
+      "iffalseVal": "5",
+      "name": "Check Variable"
+    },
+    {
+      "comment": "",
+      "color": "#000000",
+      "name": "Comment"
+    }
+  ],
+  "comType": "0"
+}
