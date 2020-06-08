@@ -1,3 +1,5 @@
+# **THIS IS AN ARCHIVED REPOSITORY, DO NOT USE ANY RAW DATA YOU MAY FIND HERE. YOU WILL NOT RECEIVE ANY FORM OF SUPPORT.**
+** **    
 ## General Information    
 This is a reworked version of my previous [Verification System](https://github.com/zachdoug24/dbm-projects/tree/verify) that features much more variability for bots that feature a large variety of servers. This has all the features the previous included, plus much more. 
 
