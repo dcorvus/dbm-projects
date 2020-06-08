@@ -1,3 +1,5 @@
+# **THIS IS AN ARCHIVED REPOSITORY, DO NOT USE ANY RAW DATA YOU MAY FIND HERE. YOU WILL NOT RECEIVE ANY FORM OF SUPPORT.**
+** **    
 # DBM Projects
 ## General Repository Information    
 This repository is where I, [`dcorvus`](https://github.com/dcorvus), will be keeping track of all projects created via Discord Bot Maker that I will publicly give to the users of the community. Some of the commands will be singular bits of code, others will be full-blown projects that span multiple commands and events. All of these commands have had a fair amount of effort put into them, so if you have followed all instructions, as well asYou can find a list of each below.    
